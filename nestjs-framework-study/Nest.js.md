@@ -169,8 +169,6 @@ With Express, you install and wire everything manually:
 - Guards / Auth → passport / jwt
     
 - Testing → supertest + mocha/jest
-    
-
   
 In Nest:
 
