@@ -33,9 +33,10 @@ That [FOSS Website](https://alternativeoss.com/)
 ---
 
 ## Pet Projects
+
 1. [SuperFile](https://github.com/yorukot/superfile): Temrinal File Manager
 2. [Fabric AI Tool](https://www.youtube.com/watch?v=UbDyjIIGaxQ): [[Fabric]] Reduce the friction between humans and AI
 3. How to AI skill Developer: [video](https://www.youtube.com/watch?v=eqrq5pTqFgc)
-5. Obsidian Setup: [video](https://www.youtube.com/watch?v=3ccktMJ1YHI)
+4. Obsidian Setup: [video](https://www.youtube.com/watch?v=3ccktMJ1YHI)
 
 ---
