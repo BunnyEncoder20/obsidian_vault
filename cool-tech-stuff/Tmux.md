@@ -41,37 +41,35 @@ This reference documents the custom keybindings defined in your `tmux.conf` fi
 
 These bindings create new horizontal or vertical panes.
 
-|   |   |   |   |
-|---|---|---|---|
-|**Key**|**Binding Type**|**Action**|**Description**|
-|**Prefix + h**|Custom|`split-window -h`|Split the current pane **Horizontally**|
-|**Prefix + \|**|Custom|`split-window -h`|Split the current pane **Horizontally**|
-|**Prefix + v**|Custom|`split-window -v`|Split the current pane **Vertically**|
-|**Prefix + -**|Custom|`split-window -v`|Split the current pane **Vertically**|
+| **Key**         | **Binding Type** | **Action**        | **Description**                         |
+| --------------- | ---------------- | ----------------- | --------------------------------------- |
+| **Prefix + h**  | Custom           | `split-window -h` | Split the current pane **Horizontally** |
+| **Prefix + \|** | Custom           | `split-window -h` | Split the current pane **Horizontally** |
+| **Prefix + v**  | Custom           | `split-window -v` | Split the current pane **Vertically**   |
+| **Prefix + -**  | Custom           | `split-window -v` | Split the current pane **Vertically**   |
+| **Prefix + x**  | Custom           | `kill the pane`   | **Kill/close** the current pane.        |
 
 #### Pane Resizing and Utility
 
 These bindings control the size and state of the current pane.
 
-|   |   |   |   |
-|---|---|---|---|
-|**Key**|**Binding Type**|**Action**|**Description**|
-|**Prefix + W**|Repeatable|`resize-pane -U`|Resize pane **Up** (Hold key to repeat)|
-|**Prefix + A**|Repeatable|`resize-pane -L`|Resize pane **Left** (Hold key to repeat)|
-|**Prefix + S**|Repeatable|`resize-pane -D`|Resize pane **Down** (Hold key to repeat)|
-|**Prefix + D**|Repeatable|`resize-pane -R`|Resize pane **Right** (Hold key to repeat)|
-|**Prefix + f**|Custom|`resize-pane -Z`|**Toggle Pane Zoom** (Maximize or restore current pane)|
-|**Alt + f**|**(No Prefix)**|`resize-pane -Z`|**Toggle Pane Zoom** (Maximize or restore current pane)|
-|**Prefix + q**|Custom|`detach-client`|Detach the current client from the session|
-|**Prefix + e**|Custom|`choose-window -Z`|Choose a window from a list and automatically **Zoom** into it|
+| **Key**        | **Binding Type** | **Action**         | **Description**                                                |
+| -------------- | ---------------- | ------------------ | -------------------------------------------------------------- |
+| **Prefix + W** | Repeatable       | `resize-pane -U`   | Resize pane **Up** (Hold key to repeat)                        |
+| **Prefix + A** | Repeatable       | `resize-pane -L`   | Resize pane **Left** (Hold key to repeat)                      |
+| **Prefix + S** | Repeatable       | `resize-pane -D`   | Resize pane **Down** (Hold key to repeat)                      |
+| **Prefix + D** | Repeatable       | `resize-pane -R`   | Resize pane **Right** (Hold key to repeat)                     |
+| **Prefix + f** | Custom           | `resize-pane -Z`   | **Toggle Pane Zoom** (Maximize or restore current pane)        |
+| **Alt + f**    | **(No Prefix)**  | `resize-pane -Z`   | **Toggle Pane Zoom** (Maximize or restore current pane)        |
+| **Prefix + q** | Custom           | `detach-client`    | Detach the current client from the session                     |
+| **Prefix + e** | Custom           | `choose-window -Z` | Choose a window from a list and automatically **Zoom** into it |
 
 #### Window Management
 
 - These bindings switch between and select windows (tabs).
 
-|                        |                  |                         |                                                    |
-| ---------------------- | ---------------- | ----------------------- | -------------------------------------------------- |
 | **Key**                | **Binding Type** | **Action**              | **Description**                                    |
+| ---------------------- | ---------------- | ----------------------- | -------------------------------------------------- |
 | **Prefix + C-t**       | Custom           | `new window`            | Make a **new window**                              |
 | **Prefix + C-w**       | Custom           | `close/kill window`     | **closes/kills** current window                    |
 | **Ctrl + Tab**         | **(No Prefix)**  | `next-window`           | Go to the **Next Window**                          |
