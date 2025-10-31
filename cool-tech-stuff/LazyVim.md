@@ -1,5 +1,19 @@
 # LazyVim
 
+- My Ghosty terminal settings:
+
+```Bash
+font-family = SpaceMono Nerd Font Mono
+font-size = 15
+background-opacity = 0.9
+background = #1e1e2e
+background-blur-radius = 10
+theme = Argonaut
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = true
+```
+
 ## Basic Essentials Keys
 
 | **Category**       | **Action**               | **Key Binding (Normal Mode)**                                  | **VS Code Equivalent**                 |
@@ -23,7 +37,9 @@
 |                    | **Toggle File Explorer** | `<leader>e`                                                    | Toggle Sidebar                         |
 
 ## Buffers
+
 In **Vim/Neovim**:
+
 - Buffer: The in-memory text of a file. Every file you open gets its own buffer. A buffer can exist even if it is not currently visible in a window.
 - Window: A viewport onto a buffer. You can split your editor screen to show multiple windows, each displaying a different buffer (or even the same buffer). This is similar to VS Code's split view.
 - Tab (Tab Page): A collection of windows. Similar to tabs in VS Code, but a Vim tab page often contains a complete window layout (splits).
@@ -42,26 +58,25 @@ In **Vim/Neovim**:
 
 ## Integrated Terminal
 
-|**Action**|**Key Binding (Normal Mode)**|**Description**|
-|---|---|---|
-|**Toggle Terminal**|`<leader>ft` or `<C-/>`|**T**erminal (Root Dir) - Opens a terminal in a floating window or a split pane. Press the same key again to hide/toggle it.|
-|**Open Terminal**|`<leader>fT`|**T**erminal (cwd) - Opens a terminal in the current working directory.|
-|**Hide Terminal**|`<C-/>` or `C-\` or `<Esc>`|(When _in_ the terminal) Closes the terminal and returns to the buffer.|
+| **Action**          | **Key Binding (Normal Mode)** | **Description**                                                                                                              |
+| ------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Toggle Terminal** | `<leader>ft` or `<C-/>`       | **T**erminal (Root Dir) - Opens a terminal in a floating window or a split pane. Press the same key again to hide/toggle it. |
+| **Open Terminal**   | `<leader>fT`                  | **T**erminal (cwd) - Opens a terminal in the current working directory.                                                      |
+| **Hide Terminal**   | `<C-/>` or `C-\` or `<Esc>`   | (When _in_ the terminal) Closes the terminal and returns to the buffer.                                                      |
 
 ## Git Integrations (The Git Panel)
 
-|**Action**|**Key Binding (Normal Mode)**|**Description**|
-|---|---|---|
-|**Toggle Git Panel**|`<leader>gg`|Open the **Lazygit** UI in a new split window.|
-|**Show Git Status**|`gs`|Show a pop-up with **G**it **S**tatus (files changed).|
-|**Stage Hunk**|`ghs`|Stage the **h**unk of code under your cursor.|
-|**Git Blame**|`<leader>gb`|**G**it **B**lame - Shows who wrote the current line.|
-|**Git Diff**|`gd`|**G**it **D**iff - Opens a split showing the changes in the current file.|
+| **Action**           | **Key Binding (Normal Mode)** | **Description**                                                           |
+| -------------------- | ----------------------------- | ------------------------------------------------------------------------- |
+| **Toggle Git Panel** | `<leader>gg`                  | Open the **Lazygit** UI in a new split window.                            |
+| **Show Git Status**  | `gs`                          | Show a pop-up with **G**it **S**tatus (files changed).                    |
+| **Stage Hunk**       | `ghs`                         | Stage the **h**unk of code under your cursor.                             |
+| **Git Blame**        | `<leader>gb`                  | **G**it **B**lame - Shows who wrote the current line.                     |
+| **Git Diff**         | `gd`                          | **G**it **D**iff - Opens a split showing the changes in the current file. |
 
 ## Theme
 
-|**Action**|**Key Binding (Normal Mode)**|**Description**|
-|---|---|---|
-|**Change Colorscheme**|`<leader>uC`|Opens an interactive list of installed colorschemes (themes) for you to preview and select.|
-|**Change UI Options**|`<leader>u`|Opens the **U**I menu, where you can toggle things like Zen Mode, Indent Guides, and other visual settings.|
-
+| **Action**             | **Key Binding (Normal Mode)** | **Description**                                                                                             |
+| ---------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Change Colorscheme** | `<leader>uC`                  | Opens an interactive list of installed colorschemes (themes) for you to preview and select.                 |
+| **Change UI Options**  | `<leader>u`                   | Opens the **U**I menu, where you can toggle things like Zen Mode, Indent Guides, and other visual settings. |
