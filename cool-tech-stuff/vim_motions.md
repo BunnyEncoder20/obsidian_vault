@@ -4,9 +4,7 @@ The main playlist I'm following: [Primeagen - Vim As Your Editor](https://www.yo
 
 ## 1. Video 1 - Introductions
 Always remember the anatomy of a vim-motion:
-```bash
-   command count length
-```
+   # command count motion
 Commands used:
 -  h = left
 -  j = down
@@ -37,13 +35,13 @@ Commands used:
 -  p = "paste" (paste)
 
 ## Stage 2 Motions
--  f = find char (after cursor, or left). ';' for next word and "," for previous match
--  F = find char (before cursor, or right). Same controls as previous
+- 0 = takes to 0th char of line (col 0)
+- _ = takes to the first char in line (better than above option)
+- $ = takes to the last char in the line
+-  f = find char (after cursor, or right). ';' for next word and "," for previous match
+-  F = find char (before cursor, or left). Same controls as previous
 -  t = move until just before char (after cursor, or right) uses same controls as find
 -  T = move until just before char (before cursor, or left) uses same controls as find
--  <cmd>i<len> = in command. Eg: diw -> deletes in word (regardless of position)
--
+**NOTE:** these f(F) and t(T) can be paired with motion to perform commands like yank, select, delete, etc.
+- <cmd>i<len> = in command. Eg: diw -> deletes in word (regardless of position)
 
-## Find Cmds
-- :%s/is/isn't/g = in command mode, in entire file (%) search (s) replace all 'is' (/is) with 'isn't' (/isn't) and all occurances of that in the line (/g)
-- :s/is/isn't/g = replaces all occurance of the is with isn't in that line (on which the cursor is)
