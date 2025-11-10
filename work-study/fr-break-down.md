@@ -1,6 +1,7 @@
 # Functional Requirements to Development Needs
 
 ### Legends
+
 - BE: backend
 - FE: frontend
 - T01: Task 01
@@ -9,9 +10,9 @@
 
 | **Department** | **Dev Task ID**                                                                                                                                   | **Developmental Task Summary**                                                                                                                                                                                                                                                     |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Backend**    | BE-IETM-01.1                                                                                                                                      | Design and implement an **XML-aware storage solution** (DB or Blob) for S1000D Data Modules.                                                                                                                                                                                       |
+| **Backend**    | BE-IETM-01.1<br>BE-IETM-01.1.1<br>BE-IETM-01.1.2                                                                                                  | Design and implement an **XML-aware storage solution** (DB or Blob) for S1000D Data Modules.                                                                                                                                                                                       |
 | **Backend**    | BE-IETM-01.2                                                                                                                                      | Develop the **API endpoints** to retrieve the full, structured XML content for display.                                                                                                                                                                                            |
-| **Security**   | BE-IETM-01.3                                                                                                                                      | The **SOW** context implies this is proprietary data. Security must enforce who sees _what_ content.<br><br>Implement and audit **Role-Based Access Control (RBAC)** to ensure only authorized users/roles can view or interact with specific IETM Data Modules (Level 4 content). |
+| **Security**   | BE-IETM-01.3                                                                                                                                      | The **SOW** context implies this is proprietary data. Security must enforce who sees *what* content.<br><br>Implement and audit **Role-Based Access Control (RBAC)** to ensure only authorized users/roles can view or interact with specific IETM Data Modules (Level 4 content). |
 | **Frontend**   | FE-IETM-01.1                                                                                                                                      | Implement the **XML parsing and transformation logic** (e.g., using XSLT or specialized JS libraries) to convert the S1000D XML into a compliant HTML structure.                                                                                                                   |
 | **Frontend**   | FE-IETM-01.2                                                                                                                                      | Integrate core **IETM Level 4 interactivity** features, including dynamic table-of-contents generation and hyperlinking between data modules.                                                                                                                                      |
 | **DevOps**     | Implement a **CI/CD Pipeline** to automate the build, test, and deployment of the IETM application.                                               | Ensures fast, repeatable, and error-free updates, which is essential for managing living technical documentation.                                                                                                                                                                  |
@@ -24,7 +25,7 @@
 | FR-IETM-02 | **DevOps**     | DO-02.1     | Deploy and manage the **STE-100 Validation Engine** or TMS instance within the production environment.                   |                                                                                                                        |
 | FR-IETM-02 | **Security**   | SEC-02.1    | Ensure all authoring and compliance actions are recorded via an **Immutable Audit Log** to trace content accountability. | Hm, you know what, never mind this functional requirement seems like it will be taken care of with the authoring team. |
 
-## FR-IETM-03
+### FR-IETM-03
 
 | **Req ID** | **Department** | **Task ID** | **Developmental Task Summary**                                                                                                                          |
 | ---------- | -------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -57,7 +58,7 @@
 
 | **Req ID** | **Department** | **Task ID** | **Developmental Task Summary**                                                                                                                             |
 | ---------- | -------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| FR-IETM-06 | **Backend**    | BE-06.1     | Design and implement an **Authentication and Authorization Service** to handle the *cross-system login* process.                                           |
+| FR-IETM-06 | **Backend**    | BE-06.1     | Design and implement an **Authentication and Authorization Service** to handle the _cross-system login_ process.                                           |
 | FR-IETM-06 | **Backend**    | BE-06.2     | Implement **API Gateway Authentication** to validate security tokens (like JWTs) for every request and enforce authenticated access to all data endpoints. |
 | FR-IETM-06 | **Backend**    | BE-06.3     | Develop a service to retrieve and synchronize **User Roles and Permissions** from the central IdP upon successful login. (Late stage / Post deployment)    |
 | FR-IETM-06 | **Frontend**   | FE-06.1     | Implement the **Login/Logout User Interface** and client-side logic to initiate and handle the SSO redirection flow securely.                              |
@@ -101,8 +102,7 @@
 | FR-IETM-10 | **Frontend**   | FE-10.1     | Design and implement the **Note Taking UI Component** that allows users to create, view, and edit notes linked to specific sections of the IETM content.                                   |
 | FR-IETM-10 | **Frontend**   | FE-10.2     | Implement **Client-side Logic** to securely send CRUD requests to the BE API and dynamically display/refresh notes without reloading the page.                                             |
 | FR-IETM-10 | **DevOps**     | DO-10.1     | Integrate **Automated API Testing** into the CI/CD pipeline, specifically writing and running **CRUD test suites** against the BE-10.2 endpoints.                                          |
-| FR-IETM-10 | **Backend**    | BE-10.3     | Implement **Owner-Based Access Control** on the server (API layer) to ensure a user can _only_ Read, Update, or Delete notes they personally created.                                      |
-
+| FR-IETM-10 | **Backend**    | BE-10.3     | Implement **Owner-Based Access Control** on the server (API layer) to ensure a user can *only* Read, Update, or Delete notes they personally created.                                      |
 
 ## FR-IETM-11
 
@@ -137,18 +137,16 @@ PMC ???
 | FR-IETM-14 | **DevOps**     | DO-14.1     | Implement and monitor the **High-Volume Log Ingestion Pipeline** to handle the constant stream of audit events from the Frontend and Backend without performance degradation. |
 | FR-IETM-14 | **Security**   | SEC-14.1    | Enforce **Audit Log Immutability** and integrity checks to ensure traversal data cannot be tampered with, meeting high-security compliance standards.                         |
 
-
 ## FR-IETM-14
 
-|**Req ID**|**Department**|**Task ID (Example)**|**Developmental Task Summary**|
-|---|---|---|---|
-|FR-IETM-15|**Backend**|BE-15.1|Implement the **Server-Side PDF Generation Service** to transform IETM content (XML/HTML) into a structured PDF format.|
-|FR-IETM-15|**Backend**|BE-15.2|Configure the PDF Generation Service to dynamically embed a **digital watermark**(e.g., username, date, or "CONFIDENTIAL") into the PDF output.|
-|FR-IETM-15|**Frontend**|FE-15.1|Design and implement the **Print/PDF Export UI** that includes options for watermarking parameters (if applicable) and initiates the server-side export.|
-|FR-IETM-15|**Frontend**|FE-15.2|Implement a **Print-Specific CSS Stylesheet** to optimize the IETM content for readability and proper page breaks when a user uses the browser's "Print" function.|
-|FR-IETM-15|**DevOps**|DO-15.1|Deploy and maintain the **PDF Generation Libraries/Microservice** within a dedicated, high-availability environment due to high resource usage.|
-|FR-IETM-15|**Security**|SEC-15.1|Implement **PDF Security Controls** (e.g., password protection, disabling content copying/editing) and ensure the watermark is **non-removable**.|
-
+| **Req ID** | **Department** | **Task ID (Example)** | **Developmental Task Summary**                                                                                                                                     |
+| ---------- | -------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| FR-IETM-15 | **Backend**    | BE-15.1               | Implement the **Server-Side PDF Generation Service** to transform IETM content (XML/HTML) into a structured PDF format.                                            |
+| FR-IETM-15 | **Backend**    | BE-15.2               | Configure the PDF Generation Service to dynamically embed a **digital watermark**(e.g., username, date, or "CONFIDENTIAL") into the PDF output.                    |
+| FR-IETM-15 | **Frontend**   | FE-15.1               | Design and implement the **Print/PDF Export UI** that includes options for watermarking parameters (if applicable) and initiates the server-side export.           |
+| FR-IETM-15 | **Frontend**   | FE-15.2               | Implement a **Print-Specific CSS Stylesheet** to optimize the IETM content for readability and proper page breaks when a user uses the browser's "Print" function. |
+| FR-IETM-15 | **DevOps**     | DO-15.1               | Deploy and maintain the **PDF Generation Libraries/Microservice** within a dedicated, high-availability environment due to high resource usage.                    |
+| FR-IETM-15 | **Security**   | SEC-15.1              | Implement **PDF Security Controls** (e.g., password protection, disabling content copying/editing) and ensure the watermark is **non-removable**.                  |
 
 ## FR-IETM-16
 
@@ -161,7 +159,6 @@ PMC ???
 | FR-IETM-16 | **DevOps**     | DO-16.1               | Deploy, configure, and manage the **Dedicated Search Engine Cluster** (BE-16.1), including index creation and content synchronization pipelines.        |
 | FR-IETM-16 | **Security**   | SEC-16.1              | Ensure **Search Results Trimming** is enforced at the search engine level so that only content authorized for the current user (per FR-06) is returned. |
 
-
 ## FR-IETM-18
 
 | **Req ID** | **Department** | **Task ID (Example)** | **Developmental Task Summary**                                                                                                                                                        |
@@ -171,8 +168,7 @@ PMC ???
 | FR-IETM-18 | **DevOps**     | DO-18.1               | Define and automate the **Update Distribution Mechanism** (e.g., physical media, intranet distribution point) for content and software updates without requiring the public internet. |
 | FR-IETM-18 | **Security**   | SEC-18.1              | Implement and verify **certificate pinning** and **secure offline credential storage** to maintain authentication and integrity even without an internet check.                       |
 
-
-## FR-IETM-19 
+## FR-IETM-19
 
 | **Req ID** | **Department** | **Task ID (Example)** | **Developmental Task Summary**                                                                                                                                          |
 | ---------- | -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -185,327 +181,11 @@ PMC ???
 
 ## FR-IETM-21:
 
-|**Req ID**|**Department**|**Task ID (Example)**|**Developmental Task Summary**|
-|---|---|---|---|
-|FR-IETM-21|**Backend**|BE-21.1|Implement the **Natural Language Processing (NLP) Service** to interpret user input and map queries to IETM content IDs or specific procedures.|
-|FR-IETM-21|**Backend**|BE-21.2|Develop the **Query Suggestion API** using algorithms (e.g., term frequency, user history) to return relevant suggested questions or document links.|
-|FR-IETM-21|**Frontend**|FE-21.1|Design and implement the **Chatbot UI/Widget** with input, conversation history, and a clear method for displaying suggested queries/answers.|
-|FR-IETM-21|**Frontend**|FE-21.2|Implement **Real-time Input Logic** to call the Query Suggestion API (BE-21.2) as the user types, displaying suggestions dynamically.|
-|FR-IETM-21|**DevOps**|DO-21.1|Deploy and manage the **NLP Model and Service** with sufficient computational resources for low-latency query processing.|
-|FR-IETM-21|**Security**|SEC-21.1|Ensure all chatbot interactions and conversational data are protected and, if stored, secured with the same **Audit Log** principles (FR-14).|
-
-
-## FR-LMS-\#\#: Blob (Files/Media) Storage
-
-✅ **Phase 1 (Filesystem Storage)** — initial MVP
-
-✅ **Phase 2 (Introduce MinIO)** — parallel development module
-
-✅ **Phase 3 (Migration)** — switching backend + data migration
-
-✅ Each FR includes **goals**, **scope**, **non-scope**, **acceptance criteria**, and **subtasks**
-
-This is structured like proper software requirement documentation.
-
----
-
-### **Phase 1 – File Storage Module (Filesystem-Based)**
-
-#### **FR-001: Document Storage Service (Filesystem Storage)**
-##### **Goal**
-
-- Provide a backend service that allows uploading, retrieving, and deleting files (PDFs, images, videos, ZIPs) using the server’s local filesystem. Store file metadata in PostgreSQL.
-##### **Scope**
-
-✔ Upload documents
-✔ Save files to server filesystem
-✔ Store file metadata + path in PostgreSQL
-✔ Download/serve documents through NestJS controller
-✔ Delete files
-✔ Validate file type & max size
-✔ Abstract storage operations behind a unified interface
-  
-##### **Out of Scope**
-
-✘ MinIO integration
-✘ Signed URLs
-✘ Distributed storage
-✘ File versioning
-✘ Multi-node redundancy
-
----
-##### **Acceptance Criteria**
-
-1. User can upload files via API → backend saves them to local disk
-    
-2. Metadata is saved in PostgreSQL (name, size, path, mimetype, upload date)
-    
-3. Backend can retrieve a file by ID
-    
-4. Backend can delete the file + remove metadata
-    
-5. Upload limit enforced (configurable)
-    
-6. Directory structure uses a clean and deterministic approach:
-    
-```
-/data/uploads/{year}/{month}/{documentId}
-```
-    
-7. Backend code uses a **StorageService interface** such as:
-    
-```
-interface StorageService {
-  upload(file: Express.Multer.File): Promise<StoredFileMetadata>;
-  get(key: string): Promise<ReadableStream>;
-  delete(key: string): Promise<void>;
-}
-```
-
-8. Filesystem implementation: FileSystemStorageService satisfies this interface.
-    
-9. The rest of the backend **never directly touches fs** — only the abstraction.
-    
-
----
-
-#### **Subtasks**
-
-##### **ST-001: Define StorageService interface**
-- Create TypeScript interface
-    
-- Define minimal contract: upload(), get(), delete(), exists(), generatePath()
-    
-##### **ST-002: Implement FileSystemStorageService**
-
-- Use Node’s fs/promises
-    
-- Store files under /data/uploads
-    
-- Sanitize file names
-    
-- Handle file overwrites
-    
-- Error handling & custom exceptions
-    
-##### **ST-003: Create Document Entity & Repository**
-
-- PostgreSQL table (documents)
-    
-- Fields: id, filename, originalName, size, mimetype, storagePath, createdAt
-    
-##### **ST-004: Create Document Controller + Routes**
-
-- POST /documents/upload
-    
-- GET /documents/:id
-    
-- DELETE /documents/:id
-    
-##### **ST-005: Use Multer for Upload Handling**
-
-- Configure upload limits
-    
-- Allowed MIME types
-    
-- Map multer result to StorageService
-    
-##### **ST-006: Config Management**
-
-- Add env vars like: MAX_UPLOAD_SIZE, UPLOAD_DIR
-    
-##### **ST-007: Documentation**
-
-- API usage
-    
-- Directory layout
-    
-- Demo request/response
-    
-- Testing instructions
-    
-
----
-
-### **Phase 2 – Introduce MinIO Storage Module (Parallel Development)**
-
-#### **FR-002: MinIO Storage Service (Optional Second Storage Backend)**
-
-##### **Goal**
-
-Add support for storing files on MinIO using AWS S3 API, without disrupting existing filesystem storage.
-
-##### **Scope**
-
-✔ Implement MinioStorageService that also conforms to StorageService interface
-✔ Support uploads, downloads, deletes
-✔ Store object keys in DB
-✔ Create MinIO bucket (via admin or script)
-✔ Add MinIO config support in ENV
-✔ Allow switching via config:
-
-```
-STORAGE_BACKEND=filesystem | minio
-```
-
-##### **Out of Scope**
-
-✘ Automatic migration of existing filesystem files
-✘ Replication or MinIO HA
-✘ MinIO console authentication UX
-✘ File versioning
-
----
-
-##### **Acceptance Criteria**
-
-1. MinIO service is available under a configured internal URL (HTTP or HTTPS).
-    
-2. Backend can switch to MinIO by toggling configuration.
-    
-3. MinIO service reuses the same StorageService interface.
-    
-4. Upload → returns an object key instead of a filesystem path.
-    
-5. Download → retrieves from MinIO via S3 SDK
-    
-6. Error handling: bucket missing, invalid credentials, timeouts
-    
-7. Backend fallback remains working for filesystem backend
-    
-
----
-
-#### **Subtasks**
-
-  
-
-##### **ST-201: Implement MinioStorageService**
-
-- Use @aws-sdk/client-s3
-    
-- Implement multipart upload
-    
-- Use bucket name from env
-    
-
-##### **ST-202: Add MinIO Config**
-
-- MINIO_ENDPOINT
-    
-- MINIO_BUCKET
-    
-- MINIO_ACCESS_KEY
-    
-- MINIO_SECRET_KEY
-    
-- MINIO_USE_SSL
-    
-##### **ST-203: Add StorageModule factory**
-
-```
-providers: [
-  {
-    provide: StorageService,
-    useClass: process.env.STORAGE_BACKEND === 'minio' 
-      ? MinioStorageService 
-      : FileSystemStorageService
-  }
-]
-```
-
-##### **ST-204: Update Document Entity**
-
-- Replace storagePath with storageKey
-    
-    ✅ This keeps it storage-agnostic.
-	
-##### **ST-205: Add health checks**
-
-- Can connect to MinIO
-    
-- Bucket exists
-    
-
-##### **ST-206: Documentation**
-
-- How to deploy MinIO
-    
-- How to configure Caddy reverse proxy for local TLS
-    
-- How to switch backend
-    
-
----
-
-### Phase 3 – Migration to MinIO (When the time comes)**
-
-#### **FR-003: File Migration from Filesystem to MinIO**
-
-##### **Goal**
-
-Move existing documents stored on the filesystem to MinIO without downtime and update metadata.
-
-##### **Scope**
-
-✔ Script to iterate all files
-✔ Upload to MinIO
-✔ Update DB row with new object key
-✔ Keep old files until full migration approved
-✔ Logging & error handling
-##### **Out of Scope**
-
-✘ Automatic rollback
-✘ Partial migration support from UI
-✘ Backup/archival processes
-
----
-
-##### **Acceptance Criteria**
-
-1. Running migration command uploads all local files to MinIO bucket.
-    
-2. Database updates correctly.
-    
-3. Missing files are logged and skipped.
-    
-4. Dry-run mode available.
-    
-5. Verification step checks object integrity.
-    
-
----
-
-#### **Subtasks**
-
-##### **ST-301: Migration Command Script**
-
-- CLI tool using NestJS Command or a Node script
-    
-- Reads all documents table entries
-    
-- Uploads to MinIO
-    
-- Updates DB with new key
-	  
-##### **ST-302: Verification Script**
-
-- Confirms all files exist in MinIO
-    
-- Compares file size and checksum
-    
-  
-##### **ST-303: Decommission Script (optional)**
-
-- Deletes local files after confirmation
-    
-##### **ST-304: Documentation**
-
-- Migration process
-    
-- Rollback strategy
-    
-- Risks & fallback plan
-    
-
----
+| **Req ID** | **Department** | **Task ID (Example)** | **Developmental Task Summary**                                                                                                                       |
+| ---------- | -------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| FR-IETM-21 | **Backend**    | BE-21.1               | Implement the **Natural Language Processing (NLP) Service** to interpret user input and map queries to IETM content IDs or specific procedures.      |
+| FR-IETM-21 | **Backend**    | BE-21.2               | Develop the **Query Suggestion API** using algorithms (e.g., term frequency, user history) to return relevant suggested questions or document links. |
+| FR-IETM-21 | **Frontend**   | FE-21.1               | Design and implement the **Chatbot UI/Widget** with input, conversation history, and a clear method for displaying suggested queries/answers.        |
+| FR-IETM-21 | **Frontend**   | FE-21.2               | Implement **Real-time Input Logic** to call the Query Suggestion API (BE-21.2) as the user types, displaying suggestions dynamically.                |
+| FR-IETM-21 | **DevOps**     | DO-21.1               | Deploy and manage the **NLP Model and Service** with sufficient computational resources for low-latency query processing.                            |
+| FR-IETM-21 | **Security**   | SEC-21.1              | Ensure all chatbot interactions and conversational data are protected and, if stored, secured with the same **Audit Log** principles (FR-14).        |
