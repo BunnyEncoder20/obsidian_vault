@@ -24,3 +24,9 @@ npx prisma migrate resolve --rolled-back "20201127134938_added_bio_index"
 ```bash
  npx prisma migrate reset
 ```
+
+### Important Commands
+- `npx prisma migrate dev`: Applies database migrations.
+- `npx prisma db seed`: Seeds the database.
+- `npx prisma generate`: Generates the Prisma client.
+- `npx prisma studio`: Opens Prisma studio in browser
