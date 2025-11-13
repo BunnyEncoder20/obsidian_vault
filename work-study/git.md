@@ -68,3 +68,17 @@ git branch -d feature/my-new-feature-name
 ```bash
 git push origin --delete feature/my-new-feature-name
 ```
+
+---
+
+## Restore files 
+
+We can restore corrupted or lost files by using the restore command of Git. It's helpful when our editor is Nvim:
+- For restoring the file from the latest commit has:
+```bash
+git restore --source=12c90f2f5a1d --worktree path/to/your/file.txt
+```
+- For restore the file from the latest remote branch commit:
+```bash
+git restore --source=origin/your-branch-name --worktree path/to/your/file.txt
+```
