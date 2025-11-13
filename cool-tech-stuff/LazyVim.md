@@ -80,3 +80,17 @@ In **Vim/Neovim**:
 | ---------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **Change Colorscheme** | `<leader>uC`                  | Opens an interactive list of installed colorschemes (themes) for you to preview and select.                 |
 | **Change UI Options**  | `<leader>u`                   | Opens the **U**I menu, where you can toggle things like Zen Mode, Indent Guides, and other visual settings. |
+
+## Things I Wish I knew earlier 
+
+| **Action**                           | **Key Binding (Normal Mode)**                               | **Description**                                                              |
+| ------------------------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Quit Vim With saving**             | `<ZZ>`                                                      | Quit vim quickly and saving all work                                         |
+| **Go to Line number**                | `<number>G`                                                 | Takes Cursor to that line number line                                        |
+| **Go to previous cursor position**   | `<C-o>`                                                     | Takes cursor to the previous position (kinda like a history for your cursor) |
+| **Select inside the bracket**        | `vi(` or `vib` <br>`vi{` or `viB`                           | Select the content inside the specified brackets                             |
+| **Change Command**                   | `C` <br>combines with all motions. Eg: `cw`,`cb`,`ce`,`ciw` | delete and enter into insert mode                                            |
+| **Commets**                          | `gcc` (comment line)<br>`gc` (comment para in Visual Block) | Comments the line directly from Normal-Visual modes                          |
+| **mini.surround add surrounding**    | `gsa<brac>` or `gsa<qoutes>`                                | ***Select*** the text and add surrounding bracket or qoutes                  |
+| **mini.surround delete surrounding** | `gsd<brac>` or `gsd<qoutes>`                                | Deletes the surrounding bracket or qoutes specified                          |
+| **Join to lines**                    | `J`                                                         | Brings the below line to the current line and adds in between both lines     |
