@@ -83,14 +83,143 @@ In **Vim/Neovim**:
 
 ## Things I Wish I knew earlier 
 
-| **Action**                           | **Key Binding (Normal Mode)**                               | **Description**                                                              |
-| ------------------------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| **Quit Vim With saving**             | `<ZZ>`                                                      | Quit vim quickly and saving all work                                         |
-| **Go to Line number**                | `<number>G`                                                 | Takes Cursor to that line number line                                        |
-| **Go to previous cursor position**   | `<C-o>`                                                     | Takes cursor to the previous position (kinda like a history for your cursor) |
-| **Select inside the bracket**        | `vi(` or `vib` <br>`vi{` or `viB`                           | Select the content inside the specified brackets                             |
-| **Change Command**                   | `C` <br>combines with all motions. Eg: `cw`,`cb`,`ce`,`ciw` | delete and enter into insert mode                                            |
-| **Commets**                          | `gcc` (comment line)<br>`gc` (comment para in Visual Block) | Comments the line directly from Normal-Visual modes                          |
-| **mini.surround add surrounding**    | `gsa<brac>` or `gsa<qoutes>`                                | ***Select*** the text and add surrounding bracket or qoutes                  |
-| **mini.surround delete surrounding** | `gsd<brac>` or `gsd<qoutes>`                                | Deletes the surrounding bracket or qoutes specified                          |
-| **Join to lines**                    | `J`                                                         | Brings the below line to the current line and adds in between both lines     |
+| **Action**                                            | **Key Binding (Normal Mode)**                               | **Description**                                                                 |
+| ----------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Quit Vim With saving**                              | `<ZZ>`                                                      | Quit vim quickly and saving all work                                            |
+| **Go to Line number**                                 | `<number>G`                                                 | Takes Cursor to that line number line                                           |
+| **Go to previous cursor position**                    | `<C-o>`                                                     | Takes cursor to the previous position (kinda like a history for your cursor)    |
+| **Select inside the bracket**                         | `vi(` or `vib` <br>`vi{` or `viB`                           | Select the content inside the specified brackets                                |
+| **Change Command**                                    | `C` <br>combines with all motions. Eg: `cw`,`cb`,`ce`,`ciw` | delete and enter into insert mode                                               |
+| **Commets**                                           | `gcc` (comment line)<br>`gc` (comment para in Visual Block) | Comments the line directly from Normal-Visual modes                             |
+| **mini.surround add surrounding**                     | `gsa<brac>` or `gsa<qoutes>`                                | ***Select*** the text and add surrounding bracket or qoutes                     |
+| **mini.surround delete surrounding**                  | `gsd<brac>` or `gsd<qoutes>`                                | Deletes the surrounding bracket or qoutes specified                             |
+| **Join to lines**                                     | `J`                                                         | Brings the below line to the current line and adds in between both lines        |
+| **Delete precious word in insert mode itself**        | `<C-w>`                                                     | Delete the last word in insert mode itself. No more `<esc>` then `diw` then `i` |
+| **From insert mode run a single normal mode command** | `<C-o>` \[noraml mode command \]                            | The project uses PostgreSQL as the database and Prisma as the ORM.<br>          |
+| **Find word under cursor**                            | `*` then `n` to cycle to next nad `N` to cycle to previous  | Find and cycle through matches of the word under cursor                         |
+
+
+Transparent background code: 
+### init.lua
+```lua
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
+
+-- set default colorscheme
+vim.cmd.colorscheme("tokyonight")
+
+-- function Transparent(color)
+--   color = color or "tokyonight"
+--   vim.cmd.colorscheme(color)
+--   vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+--   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- end
+-- Transparent()
+
+```
+
+# OR
+### tokyonight.lua
+```lua
+return {
+  "folke/tokyonight.nvim",
+  opts = {
+    transparent = true,
+    styles = {
+      floats = "transparent",
+      sidebars = "transparent", -- keep sidebars transparent *except* the ones we manually override
+    },
+    on_highlights = function(hl, c)
+      -- Make Neo-tree NOT transparent
+      hl.NeoTreeNormal = { bg = c.bg_dark }
+      hl.NeoTreeNormalNC = { bg = c.bg_dark }
+
+      -- If you also use NvimTree instead of Neo-tree:
+      -- hl.NvimTreeNormal = { bg = c.bg_dark }
+      -- hl.NvimTreeNormalNC = { bg = c.bg_dark }
+    end,
+  },
+}
+
+```
+
+# OR
+
+Transparency plugin (has the same effect as above same flaw too, but it keeps explorer and other things opaque which I like better than all transparent. Plus comes with a toggle)
+lua/plugins/transparency.lua
+
+```lua
+return {
+
+"xiyaowong/transparent.nvim",
+
+lazy = false,
+
+config = function()
+
+require("transparent").setup({
+
+groups = {
+
+"Normal",
+
+"NormalNC",
+
+"Comment",
+
+"Constant",
+
+"Special",
+
+"Identifier",
+
+"Statement",
+
+"PreProc",
+
+"Type",
+
+"Underlined",
+
+"Todo",
+
+"String",
+
+"Function",
+
+"Conditional",
+
+"Repeat",
+
+"Operator",
+
+"Structure",
+
+"LineNr",
+
+"NonText",
+
+"SignColumn",
+
+"CursorLine",
+
+"CursorLineNr",
+
+"StatusLine",
+
+"StatusLineNC",
+
+"EndOfBuffer",
+
+},
+
+extra_groups = { "NeoTreeNormal", "NeoTreeNormalNC" },
+
+exclude_groups = {},
+
+})
+
+end,
+
+}
+```
