@@ -426,3 +426,115 @@ enum RequestStatus {
   - ✓ Composite unique keys (`@@unique`)
   - ✓ Clean migration path into Keycloak later
   - ✓ Works with already made schema
+
+
+## IETM Backend Integrations (Study)
+
+### What's wrong with current approach
+
+Problems:
+- - ❌ Storing entire subsystem manuals in an array inside a JS file is not scalable
+- ❌ No database representation → no RBAC mapping
+- ❌ You cannot know which manual belongs to which subsystem in a relational layer
+- ❌ Hard to update individual manuals
+- ❌ Reprocessing requires re-running whole scripts
+- ❌ Cannot support per-module access (the new RBAC requirement)
+- ❌ No easy versioning
+We need to replace this system with a better more future proof and scalable one.
+
+### Correct Modern Architecture
+
+Here is the correct industrial-standard architecture we want:
+```scss
+Raw Data Files (Array → JSON)  
+     ↓
+Ingestion Script (Node, Nest, or CLI)
+     ↓
+Database (Modules, Sections, Pages)
+     ↓
+File Storage (HTML or PDF files per manual)
+     ↓
+Elasticsearch (search index)
+     ↓
+Backend API (NestJS)
+     ↓
+Frontend (IETM UI)
+```
+We would split the concerns:
+- Structured metadata in DB 
+- Raw Html Stored as files in file system or object storage
+- Search index stored in ED
+- Access control via DB using new RBAC system.
+This is clean and future proof
+
+### How to Ingest current array-based raw data ?
+
+1. Parse the JSON/JS file
+2. Loop through each subsystem -> match the subsystem table
+3. For each manual -> create a new record in the module table
+4. store the raw html into file storage and reference path in DB
+5. Push the searchable text to Elasticsearch (just title + content)
+
+### How to Store manual html files
+
+2 Viable options:
+
+#### Storing in the server FileSystem
+
+- store the subsystems manuals in there own dedicated dirs and store the manuals filepath to the DB manual table
+- This is the recommended approach for a faster implementation and also easily ngl
+
+#### Storing the Files in a self hosted Blob storage solution
+
+- Have planned this for future iterations to migrate to **MinIO S3 storage**.
+- Massively more complex 
+- But also Hyper salable and the industry standard.
+
+### How to Index the files correctly
+
+ES engine only takes text data so we could entire clean up entire manuals data to feed it our clean all sections also of each manual if we want even more granular search (think this would be worth the effort, plus we would have to rarely re-index the files)
+
+### How to serve to the front-end using RBAC?
+
+The flow would be as follows:
+```Ts
+Frontend → GET /subsystems/NAV/manuals/NAV-M-001  
+                   ↓
+ API checks:
+   1. Is user in this subsystem? (UserSubSystemRole)
+   2. Does user have access to this manual? (UserManualAccess)
+                   ↓
+   If yes → return metadata + signed URL / file read
+```
+
+### Additions to Prisma Schema:
+
+WE already have the module model, we need to enhance it more:
+```ts
+model Module {
+  id            String   @id
+  name          String
+  subSystemId   String
+  subSystem     SubSystem @relation(fields: [subSystemId], references: [id])
+
+  // storage related fields
+  contentPath   String   // Path to HTML file
+  version       Int      @default(1)
+  updatedAt     DateTime @updatedAt
+
+  // Optional: For multiple sections
+  sections      ModuleSection[]
+}
+```
+
+And depending how we decide to search and query: 
+```ts
+model ModuleSection {
+  id          String   @id @default(cuid())
+  moduleId    String
+  module      Module @relation(fields: [moduleId], references: [id])
+  title       String
+  order       Int
+  contentPath String
+}
+```
