@@ -203,7 +203,7 @@ Why this design is correct and scalable ?
 
 This is the **exact architecture used in large military and industrial intranet systems**.
 
-```sql
+```ts
 // ---------- GENERATOR & DATASOURCE ----------
 generator client {
   provider = "prisma-client-js"
@@ -359,7 +359,7 @@ model UserCreationRequest {
 enum Rank {
   VICE_ADMIRAL
   REAR_ADMIRAL
-  COMODOR
+  COMMODOR
   CAPTAIN
   COMMANDER
   LT_COMMANDER
