@@ -250,6 +250,105 @@ fmt.Println(intArr2)
 
 ### Slice
 
+Slices wrap arrays to give a general, powerful and convenient interface to sequence of data.
+If we omit the length value we now have a slice.
+
+```GO
+intSlice := []int32{4,5,6}
+fmt.Println(intSlice)
+intSlice = append(intSlice, 7)
+fmt.Println(intSlice)
+```
+
+We can change the length of a slice by using the `cap()` (capacity) func. **NOTE** that the length and the capacity of your arrays are 2 different things.
+
+```GO
+intSlice := []int32{4, 5, 6}
+fmt.Printf("intSlice Legnth: %v | Capacity: %v \n", len(intSlice), cap(intSlice))
+
+intSlice = append(intSlice, 7) // new array alloc
+fmt.Printf("intSlice Legnth: %v | Capacity: %v \n", len(intSlice), cap(intSlice))
+
+// For better performance and avoiding frequent reallocation, use the make() func
+// int32 slice with len 0 and cap 10
+intMakeSlice := make([]int32, 0, 10) 
+```
+
+A speed test would relieve that the creation and reallocation of array is a significant performance hit.
+
+### Maps (Dict)
+
+Similar to other programming languages, maps helps store the collections of `key:value` pairs 
+Make a map using the follow syntax:
+```GO
+myMap := make(map[keyType]valueType)
+myMap := map[keyType]valueType{key: val, key, val}
+
+// Declare, then assign values later
+myMap1 := make(map[string]int)
+myMap1["Varun"] = 8
+myMap1["Soma"] = 8
+
+// Declare and assign values at same time
+myMap2 := map[string]int{"Varun": 8, "Soma": 8, "Tarun": 10}
+```
+
+By default, if the key doesn't exist, the map will return the null default of that value type (if values are ints, it will return 0).
+Hence, the map can also return 2 variables value and a boolean to know if the key was not found.
+Eg:
+```GO
+rating1, ok := myMap2["Varun"]
+if ok {
+	println("Varun's rating is:", rating1)
+} else {
+	println("Varun's age not found in map")
+}
+```
+
+Delete an map entry by using the Delete() func
+```GO
+delete(myMap2, key)
+```
+
+
+## Looping
+
+The basic for loops looks like this in Go:
+```GO
+for i:=0; i<10; i++ {
+	fmt.Println(i)
+}
+```
+
+If we want to iterate over a `array`, `slice`, or a `map`, we can use the `range` keyword.
+- Maps:
+```GO
+for key, value := range myMap2 {
+	fmt.Printf("key: %v | value: %v \n", key, value)
+}
+```
+- Arrays / Slices:
+```GO
+for i, v := range intArr {
+	fmt.Printf("Index: %v, value: %v \n", i, v)
+}
+```
+
+Go **does not have while loop** instead there are a few work around with the for loop itself, to achieve similar functionality:
+```GO
+i := 0
+for i<10 {
+	// ... logic
+	i += 1
+}
+
+i = 0
+for {
+	if i >= 10 { break }
+	i = i + 1
+}
+```
+
 ---
 ## Printing to console
 
