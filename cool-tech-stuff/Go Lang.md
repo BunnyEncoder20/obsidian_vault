@@ -330,7 +330,30 @@ Delete an map entry by using the Delete() func
 delete(myMap2, key)
 ```
 
+### Structs & Interfaces
 
+- These types are like objects in Ts:
+```GO
+type gasEngine struct {
+	kmph uint8
+	liters uint8
+}
+
+func main() {
+	var myEngine1 gasEngine // method 1
+	myEngine1.kmph = 25  
+	myEngine1.liters = 13
+	
+	var myEngine2 gasEngine = gasEngine{kmph:25, liters:13}  // method 2
+	var myEngine3 gasEngine = gasEngine{25, 13}. // method 3
+}
+```
+
+There are 4 methods of assigning values:
+1. Declaring and Assigning later
+2. 
+
+---
 ## Looping
 
 The basic for loops looks like this in Go:
