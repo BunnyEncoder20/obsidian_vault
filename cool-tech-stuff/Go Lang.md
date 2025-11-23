@@ -187,10 +187,10 @@ func main() {
 **Crucial Concept:** In Go, single quotes `''` do not create strings. They create **Runes**. A `rune` is just an alias for `int32`. When you write `'A'`, Go sees the number `65`. When you write `'Γ'`, Go sees `915`.
 
 ***IMPORTANT***
-- **`len()` counts **bytes**, not characters.
+- **`len()` counts bytes**, not characters.
 - Go strings are encoded in **UTF-8**:
 	- **Standard ASCII (0-127):** Takes **1 byte**. (e.g., 'a', 'B', '1', '$').
-	- **The "Fancy" stuff:** Takes **2, 3, or 4 bytes**.
+	- **The "Fancy" special chars:** Takes **2, 3, or 4 bytes**.
 - In UTF-8, only the first **127** (ASCII) are 1 byte. Even characters in the "Extended ASCII" range (128-255), like the formatted quotes or the copyright symbol `©`, take **2 bytes** in UTF-8.
 
 *Question for you*: Why does Go do this? Why doesn't `len()` just count characters like in Java or Python? 
@@ -199,6 +199,17 @@ func main() {
 In UTF-8, characters are variable width. To count the characters in a 1GB text file, the computer has to scan _every single byte_ from start to finish to see where the characters begin and end. That is an **O(N)** operation (slow).
 
 Counting bytes is an **O(1)** operation (instant) because the string header knows its own byte size immediately. Go prefers the fast operation by default and forces you to be explicit if you want the slow operation.
+
+#### Why Such stupidity ?
+
+- Go uses UTF-8 encoding to represent strings on our computer.
+- Remember strings are represented in binary numbers for the computer. 
+- One such early way of doing this was to use the ASCII encoding (7bits, 128 chars). But, Like mentioned before, As characters started to increase, we needed more bytes to represent them.
+- If you were to use a fixed length encoding like UTF-32 There would be a lot of wasted space for these smaller characters like 'A'. 
+- UTF-8 On the other hand uses variable length encoding as in use just as much bytes as that character would require. Which is great for performance because it saves up on a lot of memory.
+- This also means that when we make an array, it's actually an array of all the byte representations of each of those characters. So if we were to iterate over all of those characters in the string, we would see that the special characters (eg which take 2 bytes) We'll have the next index missing from the loop 'Cause their binary representation is taking up two bytes. This is also why the `len(str)` Gives back the l number of bytes in the string, And not the number of characters.
+- Eg: String "résumé":
+![[../assets/resume binary string.png]]
 
 #### 5. How to iterate properly (The `range` magic)
 
@@ -219,6 +230,15 @@ for index, char := range str {
 }
 ```
 
+### Runes
+
+- Instead of handling the underlying binary string on our own, we can cast the string array into a rune array:
+```GO
+myString := []rune("resume")
+```
+- Rune represent the chars as unicode numbers so the "résumé" string would look something like this:
+![[../assets/resume in rune array.png]]
+- Rune are just a alias for int32 ngl.
 ### Boolean
 
 - super simple, like all others langs:
