@@ -637,6 +637,68 @@ Type Specific Formatting
 | `%q`     | Quoted String             | `"hello"` -> `"hello"` (Safe print: escapes special chars) |
 | `%c`     | Character (Rune)          | `65` -> `A`                                                |
 
+---
+
+## Go Routines
+
+### Concurrency != parallel execution
+
+Concurrency = one cpu core completing 2 different tasks at the same time but doing one sub task of each 
+Parallel execution = 2 cpu cores completing their own tasks at the same time
+Eg:
+- Concurrent exec:
+![[../assets/concurrent-exec.png]]
+- Parallel exec:
+![[../assets/parallel-exec.png]]
+
+**NOTE:** Althrough we achieve at least some level of parallel execution when using Go routines if we have a multi-core processor (which we obviously do).
+
+Consider the follow code scenario:
+```Go
+var dbData = [5]string{"id1", "id2", "id3", "id4", "id5"}
+
+func dbCall(i int) {
+	// Simulator for a dbCall()
+	delay := rand.Float32() * 2000 // times 2000 means the delay will be anywhere between 0-2 seconds
+	time.Sleep(time.Duration(delay) * time.Millisecond)
+	fmt.Printf("The results from the database are: %v\n", dbData[i])
+}
+
+func sequenctialDBcalls() {
+	t0 := time.Now()
+	for i := range dbData {
+		dbCall(i) // making 5 db calls in sequence
+	}
+	fmt.Printf("\nThe total execution time: %v", time.Since(t0))
+}
+
+func main() {
+	sequenctialDBcalls()
+}
+```
+
+The DB calls are being made in sequence which means that they will take a average of 5 seconds to complete. A better way would be to make these calls concurrently so that program can execute other tasks while waiting for these calls to finish
+
+This is done by using the `go` keyword in front of the func/tasks which you want to run concurrently
+```GO
+go dbCall(i)
+```
+**BUT** be careful as this just makes it so that our program will not wait for this function to complete, and do other tasks in the meantime. That could also mean that it would finish the main and exit even before we get out data back
+
+To tackle this we use `waitGroups`
+These function basically like counters:
+```GO
+impomrt "sync"  // waitgroups come from here
+wg := sunc.WaitGroup{}
+...
+wg.Add(1)  // add 1 to the wg counter when we spawn a new task
+dbCall(i)
+wg.Wait()  // waits for the wg counter to reach 0 before proceeding from this point 
+...
+fmt.Println(results)
+wg.Done()  // remove that 1 from the wg counter when the task is completed
+...
+```
 
 ---
 
