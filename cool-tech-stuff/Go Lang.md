@@ -700,6 +700,37 @@ wg.Done()  // remove that 1 from the wg counter when the task is completed
 ...
 ```
 
+### Concurrent Writing
+
+when concurrent tasks are writing to the same variable there will be some unexpected results obviously. This will lead to corrupted and missing data
+
+To tackle this we use the `mutex` (mutually exclusive lock) from the sync package. This makes it so that only one concurrent process gets to handle the common data structure:
+- `m.lock()` to lock the data structure 
+- `m.unlock()` to free the lock on data structure
+```GO
+var (
+	wg sunc.WaitGroup
+	mu sync.Mutex
+)
+...
+mu.lock()  // locking the results DS
+results = append(results, dbData[i])
+mu.Unlock()  // unlocking it after writing
+```
+
+For specific read-write protection, we can use the `RWMutex.RLock()`:
+```GO
+var (
+	rwmu sync.RWMutex
+)
+...
+rwmu.RLock()  
+fmt.Println("The current value is:", resutls)
+rwmu.RUnlock() 
+```
+**NOTE** multiple threads can have read Locks (can read while no write is happening). Whenever there would be a full lock (while writing) then the threads would wait for that to finish first (unlike the mutex.Lock() which blocks the concurrent reads also). 
+This ensures that there is no reading while one of the routines is writing to the DS.
+
 ---
 
 ## Testing
