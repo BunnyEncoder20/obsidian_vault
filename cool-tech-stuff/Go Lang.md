@@ -349,9 +349,224 @@ func main() {
 }
 ```
 
-There are 4 methods of assigning values:
-1. Declaring and Assigning later
-2. 
+There are 3 methods of assigning values:
+1. Declaring and then Assigning later
+2. Declaring and assigning at same time using struct literal syntax
+3. Omit the fields names and then values are assigned in order.
+
+The struct can have any type of fields, even another struct:
+```GO
+type gasEngine struct {
+	kmph    uint8
+	liters  uint8
+	company company
+}
+
+type company struct {
+	name string
+}
+
+func main() {
+	myEngine := gasEngine{25, 13, company{"Toyota"}}
+	fmt.Printf("Mileage: %v\n Tank: %v\n Company: %v\n", myEngine.kmph, myEngine.liters, myEngine.company.name)
+}
+
+// --- ALSO ---
+
+type gasEngine struct {
+	kmph   uint8
+	liters uint8
+	company  // If we omit the feild name and directly add the other struct
+}
+
+type company struct {
+	name string
+}
+
+func main() {
+	myEngine := gasEngine{25, 13, company{"Toyota"}}
+	
+	// We can directly access the other struct's fields, omiting the field name here also
+	fmt.Printf("Mileage: %v\n Tank: %v\n Company: %v\n", myEngine.kmph, myEngine.liters, myEngine.name)
+}
+```
+
+There are also **Anonymous Structs**. They are not reusable and need to be defined and initialized at the same time.
+```GO
+// Anonymus Stucts (no name, defined and init at same time)
+myEngine2 := struct {
+	kmph   uint8
+	liters uint8
+}{25, 13}
+fmt.Printf("Mileage: %v\n Tank: %v\n", myEngine2.kmph, myEngine2.liters)
+```
+Cause they are not reusable, whenever we want to make a new one, we have to make it all over again.
+
+We can assign functions to struct, similar to class methods in other languages:
+```GO
+// Functions assigned to specific struct (gasEngine struct here)
+func (e gasEngine) kmsLeft() uint8 {
+	return e.kmph * e.liters
+}
+
+// And electricEngine stuct here
+func (e electricEngine) kmsLeft() uint8 {
+	return e.kmpkWh * e.kWh
+}
+```
+
+**BUT** if we want to make a function to take any kind of engine and give us a result, we would need to make a ***interface*** which specifies what that structs would need in order for that function to Work.
+Eg: We need stuct such that it has a kmsLeft() func attached to that struct in order for the canMakeIt() to work:
+```Go
+// Interface
+type engine interface {
+	kmsLeft() uint8
+}
+
+// func to see if you can make it to your desitnation
+func canMakeIt(kmsToGo uint8, e engine) bool {
+	if kmsToGo <= e.kmsLeft() {
+		fmt.Println("you can make it !")
+	} else {
+		fmt.Println("you canNOT make it !")
+	}
+	return false
+}
+```
+
+Now this function can take a broader range of structs:
+```GO
+myEngine := gasEngine{25, 13, company{"Toyota"}}
+fmt.Printf(
+	"Mileage: %v\n Tank: %v\n Company: %v\n", 
+	myEngine.kmph, 
+	myEngine.liters, 
+	myEngine.name
+)
+
+myElectric := electricEngine{25, 40, company{"Tesla"}}
+fmt.Printf(
+	"Mileage: %v\n Tank: %v\n Company: %v\n", 
+	myElectric.kmpkWh, 
+	myElectric.kWh, 
+	myElectric.name
+)
+
+println("Can the gasEngine make it?")
+canMakeIt(200, myEngine)
+println("Can the electricEngine make it?")
+canMakeIt(200, myElectric)
+```
+
+### Pointers
+
+ They a special kind of data type which hold the address of a another value:
+ - declaring a pointer and making it point to a `int32` memory location (using the `new()` keyword. This is important)
+ - **dereferencing** / fetching the value at the memory location the pointer is pointing to.
+ - Notice the different uses of * here
+ ```GO
+var myPointer *int32 = new(int32)
+myPointer := new(int32)  // other (mordern) way of declaring
+println("The value myPointer points to is: %v", *myPointer) 	
+ ```
+
+We can assign values to pointers like:
+```GO
+*myPointer = 10
+fmt.Printf("The value myPointer points to is: %v\n", *myPointer)
+```
+
+*OR* 
+`&` is used to return the memory address of a variable
+if we want to point to a already existing variable using the `&variableName` syntax:
+```GO
+// Pointer pointing to a existing variable
+myVar := 10
+myPointer = &myVar
+fmt.Printf("The value myPointer points to is: %v\n", *myPointer)
+```
+
+So both the pointer and the variable `myVar` are pointing to the same memory location. So if we were to change the pointer's pointing value then we would also change the value of the variable itself. Eg:
+```GO
+myVar := 10
+myPointer = &myVar
+fmt.Printf("\n\nThe address myPointer stores is: %v\n", myPointer)  // 0xc000012150
+fmt.Printf("The value myPointer points to is: %v\n", *myPointer)  // 10
+fmt.Printf("The value myVar points to is: %v\n", *myPointer)  // 10
+
+*myPointer = 100
+fmt.Printf("\n\nThe address myPointer stores is: %v\n", myPointer) // 0xc000012150
+fmt.Printf("The value myPointer points to is: %v\n", *myPointer)  // 100
+fmt.Printf("The value myVar points to is: %v\n", *myPointer)  // also 100 now
+```
+
+ This is different from normal variables is cause when normal variables are assigned values of another variable, the compiler will just copy the values to the first variables memory location.
+ The **only Exception** to this copy rule are slices:
+ ```GO
+originalSlice := []int{1, 2, 3}
+copySlice := originalSlice
+
+copySlice[2] = 4 // only modifying the copySlice
+fmt.Println("originalSlice: ", originalSlice)
+fmt.Println("copySlice: ", copySlice)
+ ```
+ This is cause Slices under the hood contain pointers to a underlying array. Thus both variables are pointing to the same pointers/references so when one is changed, it reflected to all the others as well. 
+
+#### Pointers and Functions
+
+These really go very well together as pointers could potential reduces the memory usage by a lot. Consider the following scenario:
+```GO
+func squareThisThing(thing2 [10]float32) [10]float32 {
+	fmt.Printf("memory location of thing2 array: %p\n", &thing2)
+	for i := range thing2 {
+		thing2[i] = thing2[i] * thing2[i]
+	}
+	return thing2
+}
+
+thing1 := [10]float32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+fmt.Printf("memory location of thing1 array: %p\n", &thing1)
+result := squareThisThing(thing1)
+fmt.Println("The result is: ", result)
+```
+
+- We would notice that the memory location for both the `thing1` and the `thing2` arrays are different. Cause we are sending the array by value. (Copying the contents of thing1 into a new array thing2)
+- Hence we can modify the contents of thing2 array without affecting the values of thing1 (terminal output):
+```bash
+memory location of thing1 array: 0xc00001e390
+memory location of thing2 array: 0xc00001e3c0
+thing2 values:  [1 4 9 16 25 36 49 64 81 100]
+thing1 values:  [1 2 3 4 5 6 7 8 9 10]
+The result is:  [1 4 9 16 25 36 49 64 81 100]
+```
+- This means that each time we send in larger data types like arrays, 2/2D arrays, maps, structs, etc, we need up duplicating them each time we send them to a func, potential using a lot more memory than required. 
+- The the things need to be reflected back to the original data struct,  we can save much memory by just sending the reference of the data struct using pointers:
+```GO
+func squareThisThingByRef(thing4 *[10]float32) [10]float32 {
+	fmt.Printf("memory location of thing4 array: %p\n", thing4)
+	for i := range thing4 {
+		thing4[i] = thing4[i] * thing4[i]
+	}
+	fmt.Println("thing4 values: ", *thing4)
+	return *thing4
+}
+
+// sending by reference this time
+thing3 := [10]float32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+fmt.Printf("\n\nmemory location of thing3 array: %p\n", &thing3)
+result = squareThisThingByRef(&thing3)
+fmt.Println("thing3 values: ", thing3)
+fmt.Println("The result is: ", result)
+```
+
+The above codes output (notice how the memory locations of both the arrays are same this time):
+```bash
+memory location of thing3 array: 0xc00001e480
+memory location of thing4 array: 0xc00001e480
+thing4 values:  [1 4 9 16 25 36 49 64 81 100]
+thing3 values:  [1 4 9 16 25 36 49 64 81 100]
+The result is:  [1 4 9 16 25 36 49 64 81 100]
+```
 
 ---
 ## Looping
