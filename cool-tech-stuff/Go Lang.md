@@ -702,7 +702,7 @@ wg.Done()  // remove that 1 from the wg counter when the task is completed
 
 ### Concurrent Writing
 
-when concurrent tasks are writing to the same variable there will be some unexpected results obviously. This will lead to corrupted and missing data
+When concurrent tasks are writing to the same variable there will be some unexpected results obviously. This will lead to corrupted and missing data
 
 To tackle this we use the `mutex` (mutually exclusive lock) from the sync package. This makes it so that only one concurrent process gets to handle the common data structure:
 - `m.lock()` to lock the data structure 
@@ -730,6 +730,103 @@ rwmu.RUnlock()
 ```
 **NOTE** multiple threads can have read Locks (can read while no write is happening). Whenever there would be a full lock (while writing) then the threads would wait for that to finish first (unlike the mutex.Lock() which blocks the concurrent reads also). 
 This ensures that there is no reading while one of the routines is writing to the DS.
+
+### Channels
+
+Channels are a way for `GoRoutines` to pass around Information. Their main features include:
+- They hold data: like int, slice, really anything
+- Thread Safe: i.e. re avoid race conditions while reading and writing data
+- Listen for Data change: listening for reading/writing so as to block code execution.
+We could make a channel just like this:
+```GO
+func main() {
+	channel := make(chan int) // make + chan keywords
+	channel <- 1
+	i := <-channel
+	fmt.Println("Value from channel: ", i)
+}
+```
+**But this gives us a deadlock error:**
+```bash
+fatal error: all goroutines are asleep - deadlock!
+```
+ This is because when we write to an **un-buffered** channel (channel <- 1, channel which stores a single value and not a buffer/array) the code execution would be blocked until someone else reads from it.
+ Hence the code exec would be stuck on line 3 in the above code snippet. But Go's runtime is smart enough that instead of waiting forever, it just Errors out.
+
+#### Proper Communications between Routines
+
+consider the following code snippet:
+```GO
+func main() {
+	channel := make(chan int) // make + chan keywords
+	go process(channel)
+	for i := range channel {
+		fmt.Println(i)
+	}
+}
+
+func process(channel chan int) {
+	for i := range 5 {
+		channel <- i
+	}
+}
+```
+This is a slightly better way of writing and reading from the channel, however, When you run this code, the following steps occur:
+1. **`process` starts writing:** The `process` goroutine starts, and the loop runs for $i = 0, 1, 2, 3, 4$.
+2. **`main` starts reading:** The `main` goroutine's `for i := range channel` loop successfully receives and prints $0, 1, 2, 3, 4$.
+3. **`process` finishes:** After sending `4`, the `process` function's loop (`for i := range 5`) terminates. The function exits.
+4. **`main` waits forever:** The `main` goroutine's `for i := range channel` loop is now waiting for the next value to be sent on the channel. Since the `process` goroutine has exited, **no one is left to write to the channel.**
+5. **The Deadlock:** The Go runtime detects that the only remaining active goroutine (`main`) is indefinitely blocked waiting for a value on a channel that will never be written to. This situation is the definition of a **deadlock**, and the runtime immediately panics to stop the program.
+The proper way would to be close the channel when it finishes, the **sender must close the channel**. Closing tells the receiver that it's done sending data and no more values would be sent on the channel so continue with the rest of the code.
+```GO
+func process(channel chan int) {
+	for i := range 5 {
+		channel <- i
+	}
+	close(channel)
+}
+```
+we can also use the `defer` statement which basically tells that do these codes before closing the channel:
+```GO
+func process(channel chan int) {
+	defer close(channel)
+	for i := range 5 {
+		channel <- i
+	}
+}
+```
+
+#### Buffer Channels
+
+Buffer channels are holding array bufferes instead of a single value:
+```GO
+func main() {
+	bufferChannel := make(chan int, 5)
+	go process(bufferChannel)
+	for i := range bufferChannel {
+		time.Sleep(1 * time.Second) // some work main is doing
+		fmt.Println(i)
+	}
+}
+
+func process(channel chan int) {
+	defer close(channel)
+	for i := range 5 {
+		channel <- i
+	}
+	fmt.Println("Exiting process...")
+}
+```
+So even if main is taking a while to read the values from the channel, our other process doesn't have to wait for the main, and can finish it's task and exit early. Check temrinal output:
+```Go
+go-lang-study-project main  ❯ go run tut-7/main.go 
+Exiting process... // process exist immediately after writing the 5 values
+0
+1
+2
+3
+4  // main keeps running and reading the values from the channels
+```
 
 ---
 
