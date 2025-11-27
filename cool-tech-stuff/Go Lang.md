@@ -568,6 +568,87 @@ thing3 values:  [1 4 9 16 25 36 49 64 81 100]
 The result is:  [1 4 9 16 25 36 49 64 81 100]
 ```
 
+
+### Generics
+
+In strongly types languages like `GO` we often encounter the problem of make a functions which could/should be accepting more than one type:
+Consider the following code snippet which is of a function to calculate the sum of all the numbers in a slice:
+```GO
+func sumSlice(slice []int) int {
+	var sum T
+	for v := range slice {
+		sum += slice[v]
+	}
+	return sum
+}
+```
+However if we want to get the sum of a int8,int16,int32,int64,float32,float64,etc we would have have make separate functions for each type which is not goo d practice. 
+To solve this problem in strongly typed languages we have `Generics`. We can defined a Generic type like this:
+```GO
+func sumSlice[T int | float32 | float64](slice []T) T {
+	var sum T
+	for v := range slice {
+		sum += slice[v]
+	}
+	return sum
+}
+```
+The `Generic` Type name (usually 'T') is defined before the function in `[]`, followed by the different types it is supposed to intake. The `Generic` T will be replaced all over the function, return types, variable types and so on.
+
+Generally you don't want to have a any type for Generics but in some super special situations it might make sense to do  so:
+```GO
+func isEmpty[T any](slice []T) bool {
+	return len(slice) == 0
+}
+```
+
+**NOTE:** Marshal and UnMarshal
+In `Go` when we extract the datafields and types from a json string into a struct it is called UnMarshalling the JSON:
+
+![[assets/marshal-unmarshal-json-data.png]]
+
+We can also use `Genrics` types in structs also. Consider the following code snippets:
+```GO
+type gasEngine struct {
+	liters float32
+	kmph   float32
+}
+
+type electricEngine struct {
+	kWh    float32
+	kmpkWh float32
+}
+
+type car[T gasEngine | electricEngine] struct {
+	company string
+	model   string
+	engine  T
+}
+```
+Now to create a car type, we would need to specify the generic type of the engine we would like to use in it:
+```Go
+// using generics with structs
+gasCar := car[gasEngine]{
+	company: "Toyota",
+	model:   "Corolla",
+	engine: gasEngine{
+		liters: 1.8,
+		kmph:   15.0,
+	},
+}
+
+electricCar := car[electricEngine]{
+	company: "Tesla",
+	model:   "Model 3",
+	engine: electricEngine{
+		kWh:    75,
+		kmpkWh: 5.0,
+	},
+}
+```
+
+
+
 ---
 ## Looping
 
