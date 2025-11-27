@@ -922,3 +922,9 @@ Run the tests for a module using the following cmd:
 go test     # overall PASS/Fails with test name
 go test -v  # verbose 
 ```
+
+
+---
+
+## REST API Server
+
