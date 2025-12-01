@@ -1,19 +1,5 @@
 # LazyVim
 
-- My Ghosty terminal settings:
-
-```Bash
-font-family = SpaceMono Nerd Font Mono
-font-size = 15
-background-opacity = 0.9
-background = #1e1e2e
-background-blur-radius = 10
-theme = Argonaut
-shell-integration-features = no-cursor
-cursor-style = block
-cursor-style-blink = true
-```
-
 ## Basic Essentials Keys
 
 | **Category**       | **Action**               | **Key Binding (Normal Mode)**                                  | **VS Code Equivalent**                 |
@@ -81,7 +67,7 @@ In **Vim/Neovim**:
 | **Change Colorscheme** | `<leader>uC`                  | Opens an interactive list of installed colorschemes (themes) for you to preview and select.                 |
 | **Change UI Options**  | `<leader>u`                   | Opens the **U**I menu, where you can toggle things like Zen Mode, Indent Guides, and other visual settings. |
 
-## Things I Wish I knew earlier 
+## Things I Wish I knew earlier
 
 | **Action**                                            | **Key Binding (Normal Mode)**                                                   | **Description**                                                                                                                                                                                                                                                                                    |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -91,11 +77,10 @@ In **Vim/Neovim**:
 | **Select inside the bracket**                         | `vi(` or `vib` <br>`vi{` or `viB`                                               | Select the content inside the specified brackets                                                                                                                                                                                                                                                   |
 | **Change Command**                                    | `C` <br>combines with all motions. Eg: `cw`,`cb`,`ce`,`ciw`                     | delete and enter into insert mode                                                                                                                                                                                                                                                                  |
 | **Commets**                                           | `gcc` (comment line)<br>`gc` (comment para in Visual Block)                     | Comments the line directly from Normal-Visual modes                                                                                                                                                                                                                                                |
-| **mini.surround add surrounding**                     | `gsa<brac>` or `gsa<qoutes>`                                                    | ***Select*** the text and add surrounding bracket or qoutes                                                                                                                                                                                                                                        |
+| **mini.surround add surrounding**                     | `gsa<brac>` or `gsa<qoutes>`                                                    | **_Select_** the text and add surrounding bracket or qoutes                                                                                                                                                                                                                                        |
 | **mini.surround delete surrounding**                  | `gsd<brac>` or `gsd<qoutes>`                                                    | Deletes the surrounding bracket or qoutes specified                                                                                                                                                                                                                                                |
 | **Join to lines**                                     | `J`                                                                             | Brings the below line to the current line and adds in between both lines                                                                                                                                                                                                                           |
 | **Delete precious word in insert mode itself**        | `<C-w>`                                                                         | Delete the last word in insert mode itself. No more `<esc>` then `diw` then `i`                                                                                                                                                                                                                    |
 | **From insert mode run a single normal mode command** | `<C-o>` \[noraml mode command \]                                                | The project uses PostgreSQL as the database and Prisma as the ORM.<br>                                                                                                                                                                                                                             |
 | **Find word under cursor**                            | `*` then `n` to cycle to next nad `N` to cycle to previous                      | Find and cycle through matches of the word under cursor                                                                                                                                                                                                                                            |
 | **Flash nvim**                                        | `s` then letter you want to search `<ch>` then the label next to that occurance | Flash helps jump to words/letter by enabling a flash search, then type the letter you want to jump to and then it's make a label to the right of each occurrence of that word on your screen. Then by pressing that label char, we can jump to that directly. Takes a little while to get used to. |
-
