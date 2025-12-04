@@ -105,4 +105,20 @@ Provide:
 
 Keep code clean and production-ready. Avoid fluff.
 
+
+### Why this works 
+
+| **Technique**            | **How it’s used**                                                 |
+| ------------------------ | ----------------------------------------------------------------- |
+| **Persona**              | Enforces expert-like responses tailored to NestJS + Prisma.       |
+| **Always Be Contexting** | You gave project structure, requirement details, current style.   |
+| **Format**               | You defined: schema, DTOs, services, controllers, file structure. |
+| **Few-shot**             | You shared your folder layout → AI copies your style.             |
+| **CoT**                  | “Think step-by-step” ensures correctness & safety.                |
+| **ToT**                  | “Explore 2 DB schemas + compare” → avoids bad designs.            |
+| **Playoff Method**       | AI produces 2 competing designs → picks best → higher quality.    |
+| **Meta-skill: Clarity**  | The entire prompt forces explicit clarity → best possible output. |
+
+
+
 ---
