@@ -41,3 +41,27 @@ int main() {
 Now to represent decimals, there are `floats` and `doubles` (double the precision than float hence the name). But these are not always super accurate (obviously)
 So you should not use them to handle things like money. Always use ints to present them (eg: if you handling INR, always keep money stored as the unit value int *paisa* instead of presenting them as int *rupees* cause there can be 10.5 rupees but not paisa)
 
+
+## Pointers and Arrays
+
+**NOTE:**
+- You can assign a int array to a pointer, BUT not a int
+
+This is cause int array and int pointer are almost the same thing in the view of the compiler. This is more observable when you see that you can change the value of a array index using both the arr and the pointer in the same way:
+```C
+  // We change the array index value in the same using both the arr and it's
+  // pointer p
+  arr[0] = 0;
+  p[1] = 1;
+```
+
+### Pointer Arithmetic
+
+Consider the following output:
+```C
+  // Checkout the following pointer arthri
+  printf("p = %p\n", p);
+  printf("p + 2 = %p\n", p + 2);
+  // NOTE: not addr + 2 but addr + 2 * sizeof(int)
+```
+
