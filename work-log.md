@@ -85,20 +85,20 @@ CURRENT_DATE
 
 ---
 
-## [29-12-2025] Super-System-v1
+## [29-12-2025 16:42] Super-System-v1 | varun@backend
 
-**Context (The "Why"):**
+**Context:**
 
 - The only way to show true backend work is through benchmarking and stress testing.
 - To show the quality of backend work, I have implemented feature (log to console) the timing each controller takes to complete it's request cycle. These are shown as warnings for distinguishing from other server Logs
 
-**The Work (The "What"):**
+**The Work:**
 
 - [x] Implemented common/interceptor/benchmark.interceptor.ts file
 - [x] Declared it as global interceptor and added to main.ts
 - [x] The logs are showing up as intended.
 
-**The Impact (The "So What" - COLD HARD DATA):**
+**The Impact:**
 
 - **Metrics:** the times for each controller are not visible.
 - **Business Value:** This is valuable to indentify slower/heavier api endpoints which would need optmizations in the future, or indentify poorly coded services.
