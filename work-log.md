@@ -109,3 +109,73 @@ CURRENT_DATE
 - Now, we would not be optmizing blindly and only work on those modules and services which are actually slow and need work.
 
 **Tags:** #optimization #benchmark
+
+## [07-01-2026 15:57] Super-System-v1 varun@backend
+
+**Context:**
+
+- FE had made huge progress while I was away on leave for a week.
+- The actual backend was lacking the following major modules:
+  - Content module
+  - Media module
+  - Search module (integrating with elasticsearch docker instance)
+- The followingn modules were made to e read only and needed complete CRUD operations:
+  - Systems module
+  - Subsystems module
+- The following modules needed to be made from scratch:
+  - Manuals module
+  - Chapter module
+  - Data-modules module
+
+**The Work:**
+
+- [x] Implemented Content module for servering icn and other resources for the html (data-modules) raw content directly from the backend file system with file servering, streaming and security.
+- [x] Implemented CRUD operations for systems and subsystems with proper guards and validatios pipes
+- [x] Implemented Manuals, Chapters and Data-modules modules with complete CRUD operations.
+- [x] Integrated Elasticsearch with Search module for IETM search functionality (4 modes for searching, highlights, filtering, bulk indexing, auto-init on module startup, Postgresql fallback)
+- [x] Wrote spec files for each module, totalling 111 testes (all passing)
+
+**The Impact:**
+
+- **Content Module:** for file severing and security, featuring:
+  - system-level media servering
+  - path sanitization (directory traversal attack prevention)
+  - MIME type detection for all media types
+  - Range requests support for video/audio streaming
+  - Cache control headers for better performance
+  - Organization of subfolder validation checks
+  - Datamodules content servering (by id and dmc)
+  - HTML processing with image source rewriting
+- **Search Module:** featuring:
+
+  - ES 8.15.0 integration with docker
+  - 4 search modes: fuzzy, phrase, boolean, keyword
+  - postgresql fallback search
+  - bulk indexing with queue system
+  - Equipment code boosting (primary and secondary codes)
+  - Search result highlighting
+  - filtering by system, manual, type
+  - Index status tracking
+  - Auto-initialization on module startup
+
+- **Media Module:** upload and management of media files:
+
+  - Access-controlled media servering
+  - Hierarchical permission checks
+  - File upload with validation
+  - Support for manual, datamodule and system level media files
+  - MIME type detection
+  - File cleanup on deletion
+
+- **Metrics:**
+  - Tests: 13 test suites, 1 skipped, 176 passed, 177 total
+  - Performace: content servering < 200ms, search queries < 500ms
+- **Business Value:** The backend is now feature complete for the MVP version of IETM Super System v1. The FE can now integrate and test the complete system.
+- **Efficiency:** The backend is now in a state where binding can begin. Moreove, this also starts the path for writing tests for each module and service, as Test driven development is the way to go for high quality code.
+
+**Problem/Conflict Resolved:**
+
+- The backend was lagging behind due to FE using AI generated code. Being the only developer handling both backend and the databases (schema, migrations, etc), I was given only 4 weeks to bring the backend to a working (binding level) state (even though I had asked for 7-8 weeks for proper tested work). After 2 weeks of intense coding and working late nights, I was able to bring the backend to a state where binding can begin.
+- Managers seem to know very little about actual software development and due to infunce of AI, keep unrealisitic deadlines. I had to manage expectations and deliver on time, even if it meant cutting corners on services and test coverage (which I plan to fix in the coming weeks).
+
+**Tags:** #backend #crud #elasticsearch #tdd #testing #leadership
