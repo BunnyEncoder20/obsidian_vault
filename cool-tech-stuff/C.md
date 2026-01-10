@@ -1,6 +1,8 @@
 # The mother of all coding languages
 
-- A C program consists of the following parts:
+[BroCode YT Video](https://www.youtube.com/watch?v=xND0t1pr3KY)
+
+- C program consists of the following parts:
 1. Preprocessor Stuff (aka Macros)
 ```C
 #include <stdio.h> // Preprocessor Directive - stdio is part of the standard C lib
