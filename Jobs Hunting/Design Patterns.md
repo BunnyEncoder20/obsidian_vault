@@ -80,3 +80,11 @@ const cleanUser = UserFactory.create('admin', { id:'1', name: 'Bunny' });
 - Cons:
 	- Adds another layer of abstraction
 	- They are annoying coupled on the factory class.
+
+# Structural Patterns
+## Facade Pattern
+- just like the name, we put a pretty front to hide all the ugliness of the back.
+- It may sound very similar to the Factory pattern, but remember that the Factory pattern is for Object creation. Facade is *structural*, maps how the objects relate to each other.
+- Like clicking on a buy button has a lot of complex actions behind it, however, we do not care about all of that. We just want our product.
+![[Pasted image 20260203085418.png]]
+- 
