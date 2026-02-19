@@ -84,3 +84,12 @@ In **Vim/Neovim**:
 | **From insert mode run a single normal mode command** | `<C-o>` \[noraml mode command \]                                                | The project uses PostgreSQL as the database and Prisma as the ORM.<br>                                                                                                                                                                                                                             |
 | **Find word under cursor**                            | `*` then `n` to cycle to next nad `N` to cycle to previous                      | Find and cycle through matches of the word under cursor                                                                                                                                                                                                                                            |
 | **Flash nvim**                                        | `s` then letter you want to search `<ch>` then the label next to that occurance | Flash helps jump to words/letter by enabling a flash search, then type the letter you want to jump to and then it's make a label to the right of each occurrence of that word on your screen. Then by pressing that label char, we can jump to that directly. Takes a little while to get used to. |
+
+## Projects Keybindings
+
+
+| **Action**                             | **Key Binding (Normal Mode)** | **Description** |
+| -------------------------------------- | ----------------------------- | --------------- |
+| **Open project Fuzzy finder**          | `<leader>fp`                  |                 |
+| **Open Recent files from any project** | `<leader>fr`                  |                 |
+| **Restore last session**               | `<leader>ql`                  |                 |
