@@ -100,7 +100,7 @@ CURRENT_DATE
 
 **The Impact:**
 
-- **Metrics:** the times for each controller are not visible.
+- **Metrics:** the times for each controller are now visible.
 - **Business Value:** This is valuable to indentify slower/heavier api endpoints which would need optmizations in the future, or indentify poorly coded services.
 - **Efficiency:** for individual devs metrics this would do. For stress testing, proper test scripts with help of autocannon need to be written.
 
@@ -147,7 +147,6 @@ CURRENT_DATE
   - Datamodules content servering (by id and dmc)
   - HTML processing with image source rewriting
 - **Search Module:** featuring:
-
   - ES 8.15.0 integration with docker
   - 4 search modes: fuzzy, phrase, boolean, keyword
   - postgresql fallback search
@@ -159,7 +158,6 @@ CURRENT_DATE
   - Auto-initialization on module startup
 
 - **Media Module:** upload and management of media files:
-
   - Access-controlled media servering
   - Hierarchical permission checks
   - File upload with validation
@@ -179,3 +177,31 @@ CURRENT_DATE
 - Managers seem to know very little about actual software development and due to infunce of AI, keep unrealisitic deadlines. I had to manage expectations and deliver on time, even if it meant cutting corners on services and test coverage (which I plan to fix in the coming weeks).
 
 **Tags:** #backend #crud #elasticsearch #tdd #testing #leadership
+
+## [2026-02-20 10:50] Replacement of ElasticSearch with PostgreSQL for IETM Search Optimization varun@backend
+
+**Context (The "Why"):**
+
+- The IETM system, intended as a lightweight reference tool, was suffering from sluggish load times (200-500ms+) and "heavy" performance feel.
+- While not yet a blocker, I identified that the current architecture would fail to scale once we ingested the target 100-200+ manuals/media assets.
+- Profiling revealed ElasticSearch (ES) as the primary bottleneck, consuming disproportionate resources for our specific search requirements.
+
+**The Work (The "What"):**
+
+- [ ] Isolated performance issues to ElasticSearch via API profiling and log analysis.
+- [ ] Investigated PostgreSQL native search capabilities (Trigram Similarity) as a lightweight alternative to the heavy ES stack.
+- [ ] Implemented `postgres.service.ts` to mirror the existing `search.service.ts` interface, allowing a seamless swap of the backend logic.
+- [ ] Optimized database indexes to support fast fuzzy searching without an external search engine.
+
+**The Impact (The "So What" - COLD HARD DATA):**
+
+- **Metrics:** Reduced Memory usage by **99.5%** (Dropped from peaks of 50GB to ~150MB).
+- **Latency:** Slashed API response times from ~500ms to **<100ms** (sub-perceptual/instant).
+- **Efficiency:** Completely removed the ElasticSearch dependency, simplifying the deployment stack and eliminating a major point of failure.
+- **UX:** Delivered "blazingly fast" performance that the team didn't realize was possible, with no pushback on the transition from "type-ahead" to "on-enter" search.
+
+**Problem/Conflict Resolved:**
+
+- The team accepted the initial sluggishness as normal, but I refused to settle for sub-optimal performance. I challenged the assumption that we needed a complex search engine (ES) and proved that a well-tuned relational DB (Postgres) could handle the workload with a fraction of the resources.
+
+**Tags:** #optimization #postgres #backend #cost-reduction #architecture
