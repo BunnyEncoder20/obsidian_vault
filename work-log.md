@@ -205,3 +205,30 @@ CURRENT_DATE
 - The team accepted the initial sluggishness as normal, but I refused to settle for sub-optimal performance. I challenged the assumption that we needed a complex search engine (ES) and proved that a well-tuned relational DB (Postgres) could handle the workload with a fraction of the resources.
 
 **Tags:** #optimization #postgres #backend #cost-reduction #architecture
+
+
+## [27-02-2026 10:36] Agastya Code Review / Performance Improvement varun@backend
+
+**Context (The "Why"):**
+* Agastya is a document conversion and operations tool developed by another team. The application was experiencing severe performance issues and slowness, making it difficult for users to work efficiently. I was brought in to investigate and resolve the performance bottleneck.
+
+**The Work (The "What"):**
+* [x] Profiled the backend application to identify performance bottlenecks
+* [x] Reviewed existing implementation - discovered team had already implemented batch processing and multi-threading (using 4 workers)
+* [x] Recommended increasing worker count to match available CPU cores instead of hardcoded 4 workers
+* [x] Refactored backend from Flask to FastAPI to enable async request handling and better performance
+* [x] Tested application on local machine - observed massive performance gain, indicating hardware issue rather than code issue
+* [x] Investigated deployment infrastructure - discovered VM was severely resource-constrained (nearly full RAM, storage, and only 4 CPUs)
+* [x] Identified root cause: VM was hosting multiple project servers and databases simultaneously, causing resource contention
+* [x] Coordinated VM upgrade with infrastructure team
+
+**The Impact (The "So What" - COLD HARD DATA):**
+* **Metrics:** Application performance improved dramatically post-VM upgrade, eliminating user-reported slowness and lag. Bringing down the time to process 50+ documents from over 60+mins(often failing midway) to 5mins tops, reducing time to process by ~90%.
+* **Business Value:** Users can now perform document conversion operations without significant delays, improving productivity
+* **Efficiency:** Identified that the root cause was infrastructure constraints, not code quality - saving weeks of unnecessary refactoring work
+* **Architecture:** Migration from Flask to FastAPI enables better scalability and async operations for future features
+
+**Problem/Conflict Resolved:**
+* The team initially assumed the slowness was due to poor code quality and wanted a complete rewrite. I also was eager to rewrite the bckend in Go cause I was new to the language and was looking for projects to build in it. Through systematic profiling and testing, I proved the code was fundamentally sound and that hardware constraints were the actual bottleneck. This saved significant development time and prevented unnecessary refactoring. After VM upgrade and on-site deployment with sufficient hardware resources, the application ran smoothly without any performance issues.
+
+**Tags:** #optimization #backend #performance #infrastructure #leadership #debugging  
